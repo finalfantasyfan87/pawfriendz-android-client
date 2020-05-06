@@ -1,6 +1,7 @@
 package com.csc472.pawfriendz;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -8,6 +9,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 //import androidx.appcompat.widget.Toolbar;
 //import android.view.Menu;
@@ -36,6 +40,21 @@ public class MainActivity extends AppCompatActivity {
         regProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+                String url = "https://ajax.googleapis.com/ajax/" +
+                        "services/search/web?v=1.0&q={query}";
+
+// Create a new RestTemplate instance
+                RestTemplate restTemplate = new RestTemplate();
+
+// Add the String message converter
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+// Make the HTTP GET request, marshaling the response to a String
+                String result = restTemplate.getForObject(url, String.class, "Android");
+                Toast.makeText(MainActivity.this,result, Toast.LENGTH_SHORT).show();
 
                 if (username.getText().toString().isEmpty()) {
                     username.setError("Please Enter A Username");
