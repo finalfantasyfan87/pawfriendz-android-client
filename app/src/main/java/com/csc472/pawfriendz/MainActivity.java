@@ -61,6 +61,19 @@ public class MainActivity extends AppCompatActivity {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
                 //Here we get the values from the form field, convert to string and send that data to the Post request
+
+
+//                if (username.getText().toString().isEmpty()) {
+//                    username.setError("Please Enter A Username");
+//                } else if (firstName.getText().toString().isEmpty()) {
+//                    password.setError("Please Enter A First Name");
+//                } else if (lastName.getText().toString().isEmpty()) {
+//                    password.setError("Please Enter A Last Name");
+//                } else if (userEmail.getText().toString().isEmpty()) {
+//                    userEmail.setError("Please Enter Email Address");
+//                } else if (password.getText().toString().isEmpty()) {
+//                    password.setError("Please Enter A Password");
+//                }
                 String firstName1 = firstName.getText().toString();
                 String lastName1 = lastName.getText().toString();
                 String userName = username.getText().toString();
@@ -69,12 +82,18 @@ public class MainActivity extends AppCompatActivity {
                 String password1 = password.getText().toString();
                 String faveDog = favDog.getText().toString();
 
-                User pikachu = new User(firstName1, lastName1, userName, cellPhone1, userEmail1, password1, faveDog);
-                Log.i(TAG, "post submitted to API." + pikachu.toString());
-                userService.registerUser(pikachu).enqueue(new Callback<User>() {
+                //test data
+//                {"firstName": "Luis", "lastName": "Ward",
+//                "email": "obaker@gmail.com", "password": "*d8_DdS1C+",
+//                "username": "monica25", "phoneNumber": "394-564-3160"}
+
+
+                User someUser = new User(firstName1, lastName1, userName, cellPhone1, userEmail1, password1, faveDog);
+                Log.i(TAG, "post submitted to API." + someUser.toString());
+                userService.registerUser(someUser).enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
-                        Log.i(TAG, String.format("post submitted to API.  %s \n", response.body()));
+                        Log.i(TAG, String.format("post submitted to API.  %s \n", response.raw()));
 
                     }
 
@@ -84,23 +103,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
-
-                //
-//                if (username.getText().toString().isEmpty()) {
-//                    username.setError("Please Enter A Username");
-//                } else if (password.getText().toString().isEmpty()) {
-//                    password.setError("Please Enter A Password");
-//                } else if (userEmail.getText().toString().isEmpty()) {
-//                    userEmail.setError("Please Enter Email Address");
-//                }
-                //        Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
-                //====Adding Route for Profile ===
-                //  else {
-                //         Toast.makeText(MainActivity.this, username.getText().toString(), Toast.LENGTH_SHORT).show();
-                //@GetMapping
-                //@ResponseBody
-                //public String loginMsg(){
-                //return "Welcome!"}
             }
 
         });
