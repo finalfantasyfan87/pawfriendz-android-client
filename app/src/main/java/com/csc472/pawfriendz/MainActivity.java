@@ -1,13 +1,20 @@
 package com.csc472.pawfriendz;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,7 +38,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private static final int RESULT_LOAD_IMAGE = 1;
     private static final String TAG = "tagMe";
     private UserServiceAPI userService;
 
@@ -49,31 +56,47 @@ public class MainActivity extends AppCompatActivity {
         final EditText password = (EditText) findViewById(R.id.editText6password);
         final EditText favDog = (EditText) findViewById(R.id.editText7FavDog);
         final Button regProfile = (Button) findViewById(R.id.buttonSubmit);
+        final Button buttonHome = (Button) findViewById(R.id.buttonHome);
+        final Button buttonLogout = (Button) findViewById(R.id.buttonLogout);
+        final Button profilePicUpload = (Button) findViewById(R.id.profilePicture);
+        final Button editProfile = (Button) findViewById(R.id.editProfile);
+        final ImageView profilePic = (ImageView) findViewById(R.id.profilePic);
+        final TextView usernamep = (TextView) findViewById(R.id.usernamep);
+        final TextView userBio = (TextView) findViewById(R.id.userBio);
+        final ScrollView previousPost = (ScrollView) findViewById(R.id.previousPost);
         //lets discuss if we really need this field before the demo?
         final CheckBox ownDog = (CheckBox) findViewById(R.id.checkBoxdog);
         userService = APIUtils.getUserServiceAPI();
 
+        //editProfile.setOnClickListener(new View.OnClickListener()
+        //buttonHome.setOnClickListener(new View.OnClickListener()
+        //buttonLogout.setOnClickListener(new View.OnClickListener()
+        //==========setting onclick listener for profile upload====
+        profilePicUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v){
+                Intent galleryView = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryView, RESULT_LOAD_IMAGE);
+        }
+
+       //===== this activity allows the image to be selected from the gallery and uploaded=====
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+                MainActivity.super.onActivityResult(requestCode, resultCode, data);
+                if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+                    Uri selectedImage = data.getData();
+                    //profilePicUpload.setImageURI(selectedImage);
+                }
+            }
+        });
+
+
         //====Setting On Click Listener For Create Profile Button ===
         regProfile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View v){
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
                 //Here we get the values from the form field, convert to string and send that data to the Post request
-
-
-//                if (username.getText().toString().isEmpty()) {
-//                    username.setError("Please Enter A Username");
-//                } else if (firstName.getText().toString().isEmpty()) {
-//                    password.setError("Please Enter A First Name");
-//                } else if (lastName.getText().toString().isEmpty()) {
-//                    password.setError("Please Enter A Last Name");
-//                } else if (userEmail.getText().toString().isEmpty()) {
-//                    userEmail.setError("Please Enter Email Address");
-//                } else if (password.getText().toString().isEmpty()) {
-//                    password.setError("Please Enter A Password");
-//                }
                 String firstName1 = firstName.getText().toString();
                 String lastName1 = lastName.getText().toString();
                 String userName = username.getText().toString();
