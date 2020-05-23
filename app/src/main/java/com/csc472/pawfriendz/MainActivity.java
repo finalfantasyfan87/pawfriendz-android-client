@@ -15,7 +15,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.csc472.pawfriendz.model.User;
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.super.onActivityResult(requestCode, resultCode, data);
                 if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
                     Uri selectedImage = data.getData();
-                    //profilePicUpload.setImageURI(selectedImage);
+                    profilePic.setImageURI(selectedImage);
                 }
             }
         });
@@ -93,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
         //====Setting On Click Listener For Create Profile Button ===
         regProfile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
+
+
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
                 //Here we get the values from the form field, convert to string and send that data to the Post request
@@ -104,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 String userEmail1 = userEmail.getText().toString();
                 String password1 = password.getText().toString();
                 String faveDog = favDog.getText().toString();
+
+
 
                 //test data
 //                {"firstName": "Luis", "lastName": "Ward",
@@ -126,9 +129,16 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+                 openUserProfile();
             }
 
         });
+    }
+    //===== Function calls the user profile page ====
+    public void openUserProfile() {
+        Intent intent = new Intent(this, userProfile.class);
+        startActivity(intent);
+
     }
 
 }
