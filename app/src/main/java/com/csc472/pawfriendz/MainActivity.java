@@ -20,11 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.csc472.pawfriendz.model.User;
 import com.csc472.pawfriendz.service.UserServiceAPI;
 import com.csc472.pawfriendz.utils.APIUtils;
-import com.google.gson.Gson;
 
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import java.io.IOException;
+import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         //lets discuss if we really need this field before the demo?
         final CheckBox ownDog = (CheckBox) findViewById(R.id.checkBoxdog);
         userService = APIUtils.getUserServiceAPI();
-
         //editProfile.setOnClickListener(new View.OnClickListener()
         //buttonHome.setOnClickListener(new View.OnClickListener()
         //buttonLogout.setOnClickListener(new View.OnClickListener()
@@ -85,58 +84,69 @@ public class MainActivity extends AppCompatActivity {
                     Uri selectedImage = data.getData();
                     profilePic.setImageURI(selectedImage);
                 }
+
             }
         });
 
 
         //====Setting On Click Listener For Create Profile Button ===
-        regProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        regProfile.setOnClickListener(v -> {
 
 
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-                //Here we get the values from the form field, convert to string and send that data to the Post request
-                String firstName1 = firstName.getText().toString();
-                String lastName1 = lastName.getText().toString();
-                String userName = username.getText().toString();
-                String cellPhone1 = cellPhone.getText().toString();
-                String userEmail1 = userEmail.getText().toString();
-                String password1 = password.getText().toString();
-                String faveDog = favDog.getText().toString();
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            //Here we get the values from the form field, convert to string and send that data to the Post request
+            String firstName1 = firstName.getText().toString();
+            String lastName1 = lastName.getText().toString();
+            String userName = username.getText().toString();
+            String cellPhone1 = cellPhone.getText().toString();
+            String userEmail1 = userEmail.getText().toString();
+            String password1 = password.getText().toString();
+            String faveDog = favDog.getText().toString();
 
 
 
-                //test data
+            //test data
 //                {"firstName": "Luis", "lastName": "Ward",
 //                "email": "obaker@gmail.com", "password": "*d8_DdS1C+",
 //                "username": "monica25", "phoneNumber": "394-564-3160"}
 
 
-                User someUser = new User(firstName1, lastName1, userName, cellPhone1, userEmail1, password1, faveDog);
-                Log.i(TAG, "post submitted to API." + someUser.toString());
-                userService.registerUser(someUser).enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        Log.i(TAG, String.format("post submitted to API.  %s \n", response.raw()));
+            User someUser = new User(firstName1, lastName1, userName, cellPhone1, userEmail1, password1, faveDog,null);
+            Log.i(TAG, "post submitted to API." + someUser.toString());
+            userService.registerUser(someUser).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(retrofit2.Call<User> call, Response<User> response) {
+                    Log.i(TAG, String.format("post submitted to API.  %s \n", response));
+                    openUserProfile();
+                }
 
-                    }
+                @Override
+                public void onFailure(retrofit2.Call<User> call, Throwable t) {
+                    Log.e(TAG, "Unable to submit post to API." + t.getMessage());
+                }
 
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Log.e(TAG, "Unable to submit post to API." + t.getMessage());
-                    }
+            });
+            userService.getAllUsers().enqueue(new Callback<List<User>>() {
+                @Override
+                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                    System.out.println();
+                    Log.i(TAG, String.valueOf(response.body()));
 
-                });
-                 openUserProfile();
-            }
+                }
+
+                @Override
+                public void onFailure(Call<List<User>> call, Throwable t) {
+
+                }
+            });
 
         });
     }
     //===== Function calls the user profile page ====
     public void openUserProfile() {
-        Intent intent = new Intent(this, userProfile.class);
+
+        Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
 
     }

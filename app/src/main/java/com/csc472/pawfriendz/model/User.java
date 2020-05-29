@@ -3,9 +3,6 @@ package com.csc472.pawfriendz.model;
 import android.text.Editable;
 import android.widget.CheckBox;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import okhttp3.MultipartBody;
 
 public class User {
@@ -18,7 +15,7 @@ public class User {
     private String favoriteDog;
     private MultipartBody.Part profilePic;
 
-    public User(String firstName, String lastName, String email, String password, String username, String phoneNumber, String favoriteDog, MultipartBody.Part profilePic) {
+    public User(String firstName, String lastName, String email, String password, String username, String phoneNumber, String favoriteDog,MultipartBody.Part profilePic) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -107,6 +104,17 @@ public class User {
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", favoriteDog='" + favoriteDog + '\'' +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }
