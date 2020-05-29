@@ -72,13 +72,13 @@ public class MainActivity extends AppCompatActivity {
         //==========setting onclick listener for profile upload====
         profilePicUpload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v){
+            public void onClick(View v) {
                 Intent galleryView = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryView, RESULT_LOAD_IMAGE);
-        }
+            }
 
-       //===== this activity allows the image to be selected from the gallery and uploaded=====
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            //===== this activity allows the image to be selected from the gallery and uploaded=====
+            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
                 MainActivity.super.onActivityResult(requestCode, resultCode, data);
                 if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
                     Uri selectedImage = data.getData();
@@ -105,14 +105,13 @@ public class MainActivity extends AppCompatActivity {
             String faveDog = favDog.getText().toString();
 
 
-
             //test data
 //                {"firstName": "Luis", "lastName": "Ward",
 //                "email": "obaker@gmail.com", "password": "*d8_DdS1C+",
 //                "username": "monica25", "phoneNumber": "394-564-3160"}
 
 
-            User someUser = new User(firstName1, lastName1, userName, cellPhone1, userEmail1, password1, faveDog,null);
+            User someUser = new User(firstName1, lastName1, userName, cellPhone1, userEmail1, password1, faveDog, null);
             Log.i(TAG, "post submitted to API." + someUser.toString());
             userService.registerUser(someUser).enqueue(new Callback<User>() {
                 @Override
@@ -137,12 +136,13 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<User>> call, Throwable t) {
-
+                    Log.e(TAG, t.getMessage());
                 }
             });
 
         });
     }
+
     //===== Function calls the user profile page ====
     public void openUserProfile() {
 
