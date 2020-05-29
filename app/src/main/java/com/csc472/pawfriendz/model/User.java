@@ -6,48 +6,40 @@ import android.widget.CheckBox;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import okhttp3.MultipartBody;
+
 public class User {
-
-    @SerializedName("firstName")
-    @Expose
-   private String firstName;
-
-    @SerializedName("lastName")
-    @Expose
+    private String firstName;
     private String lastName;
-
-    @SerializedName("phoneNumber")
-    @Expose
-    private  String cellPhone;
-
-    @SerializedName("email")
-    @Expose
-    private String userEmail;
-
-    @SerializedName("password")
-    @Expose
+    private String email;
     private String password;
-
-    @SerializedName("username")
-    @Expose
     private String username;
+    private String phoneNumber;
+    private String favoriteDog;
+    private MultipartBody.Part profilePic;
 
-    @SerializedName("favoriteDog")
-    @Expose
-    private String favDog;
-//
-//    @SerializedName("ownDog")
-//    @Expose
-//    private  Boolean ownDog;
-
-    public User(String firstName, String lastName, String username,String cellPhone, String userEmail, String password, String favDog) {
+    public User(String firstName, String lastName, String email, String password, String username, String phoneNumber, String favoriteDog, MultipartBody.Part profilePic) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
-        this.cellPhone = cellPhone;
-        this.userEmail = userEmail;
+        this.email = email;
         this.password = password;
-        this.favDog = favDog;
+        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.favoriteDog = favoriteDog;
+        this.profilePic = profilePic;
+    }
+
+    public User() {
+    }
+
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -66,12 +58,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getCellPhone() {
-        return cellPhone;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCellPhone(String cellPhone) {
-        this.cellPhone = cellPhone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -90,40 +82,31 @@ public class User {
         this.username = username;
     }
 
-        public String getFavDog() {
-        return favDog;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setFavDog(String favDog) {
-        this.favDog = favDog;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-//    public Boolean getOwnDog() {
-//        return ownDog;
-//    }
-//
-//    public void setOwnDog(Boolean ownDog) {
-//        this.ownDog = ownDog;
-//    }
-
-    public String getUserEmail() {
-        return userEmail;
+    public String getFavoriteDog() {
+        return favoriteDog;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setFavoriteDog(String favoriteDog) {
+        this.favoriteDog = favoriteDog;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", cellPhone='" + cellPhone + '\'' +
-                ", userEmail='" + userEmail + '\'' +
-                ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", favDog='" + favDog + '\'' +
-                '}';
+    public MultipartBody.Part getProfilePic() {
+        return profilePic;
     }
+
+    public void setProfilePic(MultipartBody.Part profilePic) {
+        this.profilePic = profilePic;
+    }
+
+
+
+
 }
