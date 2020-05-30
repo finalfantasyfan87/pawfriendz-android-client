@@ -4,6 +4,7 @@ import android.text.Editable;
 import android.widget.CheckBox;
 
 import okhttp3.MultipartBody;
+import retrofit2.Response;
 
 public class User {
     private String firstName;
@@ -26,10 +27,23 @@ public class User {
         this.profilePic = profilePic;
     }
 
-    public User() {
+    public User(Response<User> response) {
+        this.firstName = response.body().firstName;
+        this.lastName = response.body().lastName;
+        this.email = response.body().email;
+        this.password =response.body().password;
+        this.username = response.body().username;
+        this.phoneNumber = response.body().phoneNumber;
+        this.favoriteDog = response.body().favoriteDog;
+        this.profilePic = response.body().profilePic;
+
     }
 
     private String userId;
+
+    public User() {
+
+    }
 
     public String getUserId() {
         return userId;

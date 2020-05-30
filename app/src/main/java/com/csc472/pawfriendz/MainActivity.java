@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final String TAG = "tagMe";
     private UserServiceAPI userService;
-
+    User myUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
         //====Setting On Click Listener For Create Profile Button ===
         regProfile.setOnClickListener(v -> {
-
-
+//will add this value to the constructor
+           // ownDog.isChecked();
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             //Here we get the values from the form field, convert to string and send that data to the Post request
@@ -104,50 +104,31 @@ public class MainActivity extends AppCompatActivity {
             String password1 = password.getText().toString();
             String faveDog = favDog.getText().toString();
 
-
-            //test data
-//                {"firstName": "Luis", "lastName": "Ward",
-//                "email": "obaker@gmail.com", "password": "*d8_DdS1C+",
-//                "username": "monica25", "phoneNumber": "394-564-3160"}
-
-
             User someUser = new User(firstName1, lastName1, userName, cellPhone1, userEmail1, password1, faveDog, null);
-            Log.i(TAG, "post submitted to API." + someUser.toString());
             userService.registerUser(someUser).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(retrofit2.Call<User> call, Response<User> response) {
                     Log.i(TAG, String.format("post submitted to API.  %s \n", response));
-                    openUserProfile();
+                    openUserProfile(response.body());
                 }
 
                 @Override
                 public void onFailure(retrofit2.Call<User> call, Throwable t) {
-                    Log.e(TAG, "Unable to submit post to API." + t.getMessage());
+                    Log.e(TAG, String.format("Unable to submit post to API.%s", t.getMessage()));
                 }
 
-            });
-            userService.getAllUsers().enqueue(new Callback<List<User>>() {
-                @Override
-                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                    System.out.println();
-                    Log.i(TAG, String.valueOf(response.body()));
-
-                }
-
-                @Override
-                public void onFailure(Call<List<User>> call, Throwable t) {
-                    Log.e(TAG, t.getMessage());
-                }
             });
 
         });
     }
 
     //===== Function calls the user profile page ====
-    public void openUserProfile() {
-
+    public void openUserProfile(User response) {
         Intent intent = new Intent(this, UserProfileActivity.class);
+        intent.putExtra("response", String.valueOf(response));
         startActivity(intent);
+
+
 
     }
 
