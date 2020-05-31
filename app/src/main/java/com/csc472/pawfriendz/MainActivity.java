@@ -38,7 +38,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final int RESULT_LOAD_IMAGE = 1;
-    private static final String TAG = "tagMe";
+    private static final String TAG = "PAWFRIENDZ";
     private UserServiceAPI userService;
     User myUser;
     @Override
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         final Button profilePicUpload = (Button) findViewById(R.id.profilePicture);
         final Button editProfile = (Button) findViewById(R.id.editProfile);
         final ImageView profilePic = (ImageView) findViewById(R.id.profilePic);
-        final TextView usernamep = (TextView) findViewById(R.id.usernamep);
         final TextView userBio = (TextView) findViewById(R.id.userBio);
         final ScrollView previousPost = (ScrollView) findViewById(R.id.previousPost);
         //lets discuss if we really need this field before the demo?
@@ -104,7 +103,9 @@ public class MainActivity extends AppCompatActivity {
             String password1 = password.getText().toString();
             String faveDog = favDog.getText().toString();
 
-            User someUser = new User(firstName1, lastName1, userName, cellPhone1, userEmail1, password1, faveDog, null);
+           // User someUser = new User(firstName1, lastName1, userEmail1, password1, userName, cellPhone1, faveDog, null);
+           //this bypasses entering data in the text fields for quick application testing
+            User someUser = new User("Melissa", "Mitchell", "zacharycox@yahoo.com", "TF5!7Ea@$1", "rogerskatherine", "653-261-4365", "Mints", null);
             userService.registerUser(someUser).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(retrofit2.Call<User> call, Response<User> response) {
