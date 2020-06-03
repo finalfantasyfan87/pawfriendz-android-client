@@ -1,7 +1,10 @@
 package com.csc472.pawfriendz.model;
 
+import android.graphics.Bitmap;
 import android.text.Editable;
 import android.widget.CheckBox;
+
+import java.io.InputStream;
 
 import okhttp3.MultipartBody;
 import retrofit2.Response;
@@ -14,9 +17,9 @@ public class User {
     private String username;
     private String phoneNumber;
     private String favoriteDog;
-    private MultipartBody.Part profilePic;
+    private InputStream profilePic;
 
-    public User(String firstName, String lastName, String email, String password, String username, String phoneNumber, String favoriteDog,MultipartBody.Part profilePic) {
+    public User(String firstName, String lastName, String email, String password, String username, String phoneNumber, String favoriteDog, InputStream profilePic) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -41,7 +44,7 @@ public class User {
 
     private String userId;
 
-    public User() {
+    public User(String firstName1, String lastName1, String userEmail1, String password1, String userName, String cellPhone1, String faveDog, String bitmap) {
 
     }
 
@@ -109,11 +112,11 @@ public class User {
         this.favoriteDog = favoriteDog;
     }
 
-    public MultipartBody.Part getProfilePic() {
+    public InputStream getProfilePic() {
         return profilePic;
     }
 
-    public void setProfilePic(MultipartBody.Part profilePic) {
+    public void setProfilePic(InputStream profilePic) {
         this.profilePic = profilePic;
     }
 
@@ -128,6 +131,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", favoriteDog='" + favoriteDog + '\'' +
+                ", profilePic=" + profilePic +
                 ", userId='" + userId + '\'' +
                 '}';
     }
