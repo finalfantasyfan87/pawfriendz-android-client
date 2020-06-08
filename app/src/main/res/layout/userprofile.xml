@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/usernamep"
+        android:id="@+id/username2"
         android:layout_width="181dp"
         android:layout_height="46dp"
         android:layout_marginStart="60dp"
@@ -105,7 +105,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toTopOf="@+id/userBio"
-        app:layout_constraintEnd_toStartOf="@+id/usernamep"
+        app:layout_constraintEnd_toStartOf="@+id/username2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />

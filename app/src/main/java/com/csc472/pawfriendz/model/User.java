@@ -3,10 +3,8 @@ package com.csc472.pawfriendz.model;
 import android.text.Editable;
 import android.widget.CheckBox;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import okhttp3.MultipartBody;
+import retrofit2.Response;
 
 public class User {
     private String firstName;
@@ -18,7 +16,7 @@ public class User {
     private String favoriteDog;
     private MultipartBody.Part profilePic;
 
-    public User(String firstName, String lastName, String email, String password, String username, String phoneNumber, String favoriteDog, MultipartBody.Part profilePic) {
+    public User(String firstName, String lastName, String email, String password, String username, String phoneNumber, String favoriteDog,MultipartBody.Part profilePic) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -29,10 +27,23 @@ public class User {
         this.profilePic = profilePic;
     }
 
-    public User() {
+    public User(Response<User> response) {
+        this.firstName = response.body().firstName;
+        this.lastName = response.body().lastName;
+        this.email = response.body().email;
+        this.password =response.body().password;
+        this.username = response.body().username;
+        this.phoneNumber = response.body().phoneNumber;
+        this.favoriteDog = response.body().favoriteDog;
+        this.profilePic = response.body().profilePic;
+
     }
 
     private String userId;
+
+    public User() {
+
+    }
 
     public String getUserId() {
         return userId;
@@ -107,6 +118,17 @@ public class User {
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", favoriteDog='" + favoriteDog + '\'' +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }
